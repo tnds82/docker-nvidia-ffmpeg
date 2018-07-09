@@ -2,13 +2,11 @@ FROM nvidia/cuda
 
 WORKDIR /tmp
 
-RUN apt-get -yqq update && \
-    apt-get install -yq --no-install-recommends ca-certificates expat libgomp1 && \
-    apt-get autoremove -y && \
-    apt-get clean -y
-    
 RUN     buildDeps="autoconf \
                    automake \
+                   ca-certificates \
+                   expat \
+                   libgomp1 \
                    cmake \
                    build-essential \
                    libass-dev \
@@ -24,5 +22,5 @@ RUN     buildDeps="autoconf \
                    curl \
                    perl \
                    mercurial" && \
-    apt-get -yqq upate && \
-    apt-get install -yq --no-install-recommends ${buildDeps}
+       apt-get -yqq update && \
+       apt-get install -yq --no-install-recommends ${buildDeps}

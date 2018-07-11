@@ -2,9 +2,6 @@ FROM nvidia/cuda
 
 WORKDIR /tmp
 
-ENV         FDKAAC_VERSION=0.1.5     \
-            SRC=/usr/local
-
 #build depends
 RUN     buildDeps="autoconf \
                    automake \
@@ -59,17 +56,15 @@ RUN cd /tmp/ffmpeg_sources && \
     make -j$(nproc) clean
     
 #build fdk-aac
-RUN \
-        DIR=/tmp/fdk-aac && \
-        mkdir -p ${DIR} && \
-        cd ${DIR} && \
-        curl -sL https://github.com/mstorsjo/fdk-aac/archive/v${FDKAAC_VERSION}.tar.gz | \
-        tar -zx --strip-components=1 && \
-        autoreconf -fiv && \
-        ./configure --prefix="$HOME/ffmpeg_build" --disable-shared --datadir="${DIR}" && \
-        make && \
-        make install && \
-        rm -rf ${DIR}
+RUN cd /tmp/ffmpeg_sources && \
+    wget -O fdk-aac.tar.gz https://github.com/mstorsjo/fdk-aac/tarball/master && \
+    tar xzvf fdk-aac.tar.gz && \
+    cd mstorsjo-fdk-aac* && \
+    autoreconf -fiv && \
+    ./configure --prefix="$HOME/ffmpeg_build" --disable-shared && \
+    make -j$(nproc) VERBOSE=1 && \
+    make -j$(nproc) install && \
+    make -j$(nproc) distclean
     
 #build nv-codec
 RUN cd /tmp/ffmpeg_sources && \
@@ -107,4 +102,3 @@ RUN cd /tmp/ffmpeg_sources && \
     PATH="$HOME/bin:$PATH" make -j$(nproc) VERBOSE=1 && \
     make -j$(nproc) install && \
     make -j$(nproc) distclean
-

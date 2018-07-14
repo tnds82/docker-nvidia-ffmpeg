@@ -1,4 +1,4 @@
-FROM nvidia/cuda
+FROM nvidia/cuda:9.2-base-ubuntu18.04
 
 WORKDIR /tmp
 

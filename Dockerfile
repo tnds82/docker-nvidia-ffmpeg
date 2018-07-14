@@ -27,6 +27,9 @@ RUN     buildDeps="autoconf \
        apt-get -yqq update && \
        apt-get install -yq --no-install-recommends ${buildDeps}
 
+#add cuda 9.2 toolkit
+RUN apt install -y --no-install-recommends cuda-toolkit-9-2=9.2.148-1
+
 #build nasm
 RUN mkdir ffmpeg_sources && cd ffmpeg_sources && \
     wget http://www.nasm.us/pub/nasm/releasebuilds/2.14rc0/nasm-2.14rc0.tar.gz && \

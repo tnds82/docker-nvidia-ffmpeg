@@ -40,6 +40,7 @@ RUN      buildDeps="autoconf \
                     zlib1g-dev \
                     make \
 		    nasm \
+		    yasm \
                     g++ \
                     gcc \
                     git \
@@ -61,10 +62,11 @@ RUN \
         cd ${DIR} && \
         curl -sL https://download.videolan.org/pub/videolan/x264/snapshots/x264-snapshot-${X264_VERSION}.tar.bz2 | \
         tar -jx --strip-components=1 && \
-        ./configure --prefix="${PREFIX}" --enable-shared --enable-pic --disable-cli && \
-        make && \
-        make install && \
+        PATH="$PREFIX/bin:$PATH" ./configure --prefix="${PREFIX}" --bindir="${PREFIX}/bin --enable-static --disable-opencl && \
+        PATH="$PREFIX/bin:$PATH" make -j$(nproc) VERBOSE=1 && \
+        make -j$(nproc) install && \
         rm -rf ${DIR}
+	
 ### x265 http://x265.org/
 RUN \
         DIR=/tmp/x265 && \

@@ -107,11 +107,12 @@ RUN \
         rm -rf ${DIR}
 	
 RUN \
-        cd /tmp/ffmpeg_sources && \
+        DIR=/tmp/nv-codec-headers && \
         git clone https://git.videolan.org/git/ffmpeg/nv-codec-headers.git && \
-        cd nv-codec-headers && \
+        cd ${DIR} && \
         make && \
-        make install
+        make install && \
+	rm -rf ${DIR}
 
 
 ## ffmpeg https://ffmpeg.org/

@@ -91,16 +91,14 @@ RUN \
 ### x265 http://x265.org/
 RUN \
         DIR=/tmp/x265 && \
-        mkdir -p ${DIR} && \
+	mkdir -p ${DIR} && \
         cd ${DIR} && \
-        curl -sL https://download.videolan.org/pub/videolan/x265/x265_${X265_VERSION}.tar.gz  | \
-        tar -zx && \
-        cd x265_${X265_VERSION}/build/linux && \
-        sed -i "/-DEXTRA_LIB/ s/$/ -DCMAKE_INSTALL_PREFIX=\${PREFIX}/" multilib.sh && \
-        sed -i "/^cmake/ s/$/ -DENABLE_CLI=OFF/" multilib.sh && \
-        ./multilib.sh && \
-        make -C 8bit install && \
-        rm -rf ${DIR}
+	hg clone https://bitbucket.org/multicoreware/x265 && \
+	cd x265 && \
+	cmake -DCMAKE_INSTALL_PREFIX:PATH=${PREFIX} source && \
+	make && \
+	make install && \
+	rm -rf ${DIR}
 
 ### fdk-aac https://github.com/mstorsjo/fdk-aac
 RUN \

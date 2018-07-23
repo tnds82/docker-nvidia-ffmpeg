@@ -23,6 +23,7 @@ ARG        MAKEFLAGS="-j2"
 
 ENV         FFMPEG_VERSION=4.0.2     \
             FDKAAC_VERSION=0.1.5      \
+	    OPENCOREAMR_VERSION=0.1.5 \
             X264_VERSION=20170226-2245-stable \
             X265_VERSION=2.3          \
             SRC=/usr/local

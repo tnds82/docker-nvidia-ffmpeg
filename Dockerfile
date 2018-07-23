@@ -129,7 +129,7 @@ RUN  \
         curl -sLO https://ffmpeg.org/releases/ffmpeg-${FFMPEG_VERSION}.tar.bz2 && \
         tar -jx --strip-components=1 -f ffmpeg-${FFMPEG_VERSION}.tar.bz2 && \
         ./configure \
-        --prefix="${PREFIX}"\
+        --prefix="${PREFIX}" \
         --pkg-config-flags="--static" \
         --extra-cflags="-I${PREFIX}/include" \
         --extra-ldflags="-L${PREFIX}/lib" \
@@ -148,9 +148,9 @@ RUN  \
         --enable-libx265 \
         --enable-nvenc \
         --enable-nonfree && \
-	PATH="${PREFIX}/bin:$PATH" make -j$(nproc) VERBOSE=1 && \
-        make -j$(nproc) install && \
-        make -j$(nproc) distclean
+        make && \
+	make install && \
+	make distclean && \
         hash -r && \
         cd tools && \
         make qt-faststart && \

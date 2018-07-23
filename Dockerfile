@@ -62,9 +62,14 @@ RUN      buildDeps="autoconf \
         apt-get -yqq update && \
         apt-get install -yq --no-install-recommends ${buildDeps}
 	
-#add cuda 9.2 toolkit
-RUN apt install -y --no-install-recommends cuda-toolkit-9-2=9.2.148-1
-
+RUN \
+	DIR=/tmp/cuda && \
+	mkdir -p ${DIR} && \
+	cd ${DIR} && \
+	wget https://developer.nvidia.com/compute/cuda/9.2/Prod2/local_installers/cuda_9.2.148_396.37_linux && \
+	bash ./cuda_9.2.148_396.37_linux --silent --toolkit --toolkitpath=/opt/ffmpeg && \
+        rm -rf ${DIR}
+	
 ## opencore-amr https://sourceforge.net/projects/opencore-amr/
 RUN \
         DIR=/tmp/opencore-amr && \

@@ -54,7 +54,19 @@ RUN      buildDeps="autoconf \
 	
 #add cuda 9.2 toolkit
 RUN apt install -y --no-install-recommends cuda-toolkit-9-2=9.2.148-1
-	
+
+## opencore-amr https://sourceforge.net/projects/opencore-amr/
+RUN \
+        DIR=/tmp/opencore-amr && \
+        mkdir -p ${DIR} && \
+        cd ${DIR} && \
+        curl -sL https://kent.dl.sourceforge.net/project/opencore-amr/opencore-amr/opencore-amr-${OPENCOREAMR_VERSION}.tar.gz | \
+        tar -zx --strip-components=1 && \
+        ./configure --prefix="${PREFIX}" --enable-shared  && \
+        make && \
+        make install && \
+        rm -rf ${DIR}
+
 ## x264 http://www.videolan.org/developers/x264.html
 RUN \
         DIR=/tmp/x264 && \
@@ -62,9 +74,9 @@ RUN \
         cd ${DIR} && \
         curl -sL https://download.videolan.org/pub/videolan/x264/snapshots/x264-snapshot-${X264_VERSION}.tar.bz2 | \
         tar -jx --strip-components=1 && \
-        PATH="$PREFIX/bin:$PATH" ./configure --prefix="${PREFIX}" --bindir="${PREFIX}/bin --enable-static --disable-opencl && \
-        PATH="$PREFIX/bin:$PATH" make -j$(nproc) VERBOSE=1 && \
-        make -j$(nproc) install && \
+        ./configure --prefix="${PREFIX}" --enable-shared --enable-pic --disable-cli && \
+        make && \
+        make install && \
         rm -rf ${DIR}
 	
 ### x265 http://x265.org/

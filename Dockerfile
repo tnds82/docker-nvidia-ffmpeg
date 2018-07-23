@@ -18,12 +18,13 @@ FROM base as build
 
 ARG        PKG_CONFIG_PATH=/opt/ffmpeg/lib/pkgconfig
 ARG        LD_LIBRARY_PATH=/opt/ffmpeg/lib
-ARG        PREFIX=/opt/ffmpeg/
+ARG        PREFIX=/opt/ffmpeg
 ARG        MAKEFLAGS="-j2"
 
 ENV         FFMPEG_VERSION=4.0.2     \
             FDKAAC_VERSION=0.1.5      \
 	    OPENCOREAMR_VERSION=0.1.5 \
+	    NV_CODEC_VERSION=8.1.24.2 \
             X264_VERSION=20170226-2245-stable \
             X265_VERSION=2.3          \
             SRC=/usr/local
@@ -114,13 +115,13 @@ RUN \
         rm -rf ${DIR}
 	
 RUN \
-        DIR=/tmp/nv-codec-headers && \
-        git clone https://git.videolan.org/git/ffmpeg/nv-codec-headers.git && \
+	DIR=/tmp/nv-codec-headers && \
+        mkdir -p ${DIR} && \
         cd ${DIR} && \
-        make && \
-        make install && \
+        curl -sL https://github.com/FFmpeg/nv-codec-headers/releases/download/n8.1.24.2/nv-codec-headers-${NV_CODEC_VERSION}.tar.gz | \
+        tar -zx --strip-components=1 && \
+        make install PREFIX="${PREFIX}" && \
 	rm -rf ${DIR}
-
 
 ## ffmpeg https://ffmpeg.org/
 RUN  \

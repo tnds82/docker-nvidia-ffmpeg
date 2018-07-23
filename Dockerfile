@@ -29,24 +29,32 @@ ENV         FFMPEG_VERSION=4.0.2     \
 
 RUN      buildDeps="autoconf \
                     automake \
-                    expat \
-                    libgomp1 \
                     cmake \
-                    build-essential \
-                    libass-dev \
-                    libtool \
-                    pkg-config \
-                    texinfo \
-                    zlib1g-dev \
-                    make \
-		    nasm \
-		    yasm \
+                    curl \
+                    bzip2 \
+                    libexpat1-dev \
                     g++ \
                     gcc \
                     git \
-                    bzip2 \
-                    curl \
+                    gperf \
+                    libtool \
+                    make \
+                    nasm \
                     perl \
+                    pkg-config \
+                    python \
+                    libssl-dev \
+                    yasm \
+                    libva-dev \
+                    zlib1g-dev \
+                    expat \
+                    libgomp1 \
+                    build-essential \
+                    libass-dev \
+                    libtool \
+                    texinfo \
+                    zlib1g-dev \
+                    curl \
                     wget \
                     mercurial" && \
         apt-get -yqq update && \

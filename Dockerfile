@@ -33,6 +33,7 @@ RUN      buildDeps="autoconf \
                     automake \
                     cmake \
                     curl \
+		    cuda \
                     bzip2 \
                     libexpat1-dev \
                     g++ \

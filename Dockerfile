@@ -59,18 +59,6 @@ ARG         FRIBIDI_SHA256SUM="3fc96fa9473bd31dcb5500bdf1aa78b337ba13eb8c301e7c2
 RUN      buildDeps="autoconf \
                     automake \
                     cmake |
-		    libfreetype6-dev \
-		    libgpac-dev \
-		    libsdl1.2-dev \
-		    libtheora-dev \
-		    libtool \
-		    libva-dev \
-		    libvdpau-dev \
-		    libvorbis-dev \
-		    libxcb1-dev \
-		    libxcb-shm0-dev \
-		    libxcb-xfixes0-dev \
-		    texi2html \
                     curl \
 		    cuda \
                     bzip2 \

@@ -21,13 +21,15 @@ ARG        LD_LIBRARY_PATH=/opt/ffmpeg/lib
 ARG        PREFIX=/opt/ffmpeg
 ARG        MAKEFLAGS="-j2"
 
-ENV         FFMPEG_VERSION=4.0.2     \
-            FDKAAC_VERSION=0.1.5      \
-	    OPENCOREAMR_VERSION=0.1.5 \
-	    NV_CODEC_VERSION=8.1.24.2 \
-            X264_VERSION=20170226-2245-stable \
-            X265_VERSION=2.3          \
-            SRC=/usr/local
+ENV        DEBIAN_FRONTEND noninteractive
+
+ENV        FFMPEG_VERSION=4.0.2     \
+           FDKAAC_VERSION=0.1.5      \
+	   OPENCOREAMR_VERSION=0.1.5 \
+	   NV_CODEC_VERSION=8.1.24.2 \
+           X264_VERSION=20170226-2245-stable \
+           X265_VERSION=2.3          \
+           SRC=/usr/local
 
 RUN      buildDeps="autoconf \
                     automake \
@@ -140,6 +142,7 @@ RUN  \
         --extra-cflags="-I${PREFIX}/include" \
         --extra-ldflags="-L${PREFIX}/lib" \
         --bindir="${PREFIX}/bin" \
+	--enable-ffnvcodec \
         --enable-cuda-sdk \
         --enable-cuvid \
         --enable-libnpp \

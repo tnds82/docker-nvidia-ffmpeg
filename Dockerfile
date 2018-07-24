@@ -142,8 +142,8 @@ RUN  \
         --enable-cuda-sdk \
         --enable-cuvid \
         --enable-libnpp \
-        --extra-cflags="-I/usr/local/cuda/include/" \
-        --extra-ldflags=-L/usr/local/cuda/lib64/ \
+        --extra-cflags="-I${PREFIX}/include" \
+        --extra-ldflags="-L${PREFIX}/lib64" \
         --nvccflags="-gencode arch=compute_61,code=sm_61 -O2" \
         --enable-gpl \
         --enable-libass \

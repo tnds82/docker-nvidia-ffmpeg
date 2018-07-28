@@ -1,4 +1,4 @@
-FROM nvidia/video-codec-sdk:8.2-ubuntu16.04
+FROM nvidia/video-codec-sdk:8.2-ubuntu18.04
 
 MAINTAINER Tnds <tndsrepo@gmail.com>
 
@@ -67,6 +67,7 @@ RUN \
                                 --prefix="/usr/local" \
                                 --bindir="/usr/local/bin" \
                                 --enable-static \
+                                --enable-pic \
                                 --disable-opencl && \
         PATH="/usr/local/bin:$PATH" make -j$(nproc) VERBOSE=1 && \
         make -j$(nproc) install && \

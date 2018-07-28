@@ -1,10 +1,3 @@
-# ffmpeg - http://ffmpeg.org/download.html
-#
-# From https://trac.ffmpeg.org/wiki/CompilationGuide/Ubuntu
-#
-# https://hub.docker.com/r/jrottenberg/ffmpeg/
-#
-#
 FROM        ubuntu:16.04 AS base
 
 WORKDIR     /tmp/workdir
@@ -53,7 +46,6 @@ ARG         LIBVIDSTAB_SHA256SUM="14d2a053e56edad4f397be0cb3ef8eb1ec3150404ce99a
 ARG         LIBASS_SHA256SUM="8fadf294bf701300d4605e6f1d92929304187fca4b8d8a47889315526adbafd7  0.13.7.tar.gz"
 ARG         FRIBIDI_SHA256SUM="3fc96fa9473bd31dcb5500bdf1aa78b337ba13eb8c301e7c28923fea982453a8  0.19.7.tar.gz"
 
-
 RUN      buildDeps="autoconf \
                     automake \
                     cmake \
@@ -76,6 +68,7 @@ RUN      buildDeps="autoconf \
                     zlib1g-dev" && \
         apt-get -yqq update && \
         apt-get install -yq --no-install-recommends ${buildDeps}
+
 ## opencore-amr https://sourceforge.net/projects/opencore-amr/
 RUN \
         DIR=/tmp/opencore-amr && \
@@ -87,6 +80,7 @@ RUN \
         make && \
         make install && \
         rm -rf ${DIR}
+
 ## x264 http://www.videolan.org/developers/x264.html
 RUN \
         DIR=/tmp/x264 && \
@@ -98,6 +92,7 @@ RUN \
         make && \
         make install && \
         rm -rf ${DIR}
+
 ### x265 http://x265.org/
 RUN \
         DIR=/tmp/x265 && \
@@ -111,6 +106,7 @@ RUN \
         ./multilib.sh && \
         make -C 8bit install && \
         rm -rf ${DIR}
+
 ### libogg https://www.xiph.org/ogg/
 RUN \
         DIR=/tmp/ogg && \
@@ -123,6 +119,7 @@ RUN \
         make && \
         make install && \
         rm -rf ${DIR}
+
 ### libopus https://www.opus-codec.org/
 RUN \
         DIR=/tmp/opus && \
@@ -136,6 +133,7 @@ RUN \
         make && \
         make install && \
         rm -rf ${DIR}
+
 ### libvorbis https://xiph.org/vorbis/
 RUN \
         DIR=/tmp/vorbis && \
@@ -148,6 +146,7 @@ RUN \
         make && \
         make install && \
         rm -rf ${DIR}
+
 ### libtheora http://www.theora.org/
 RUN \
         DIR=/tmp/theora && \
@@ -160,6 +159,7 @@ RUN \
         make && \
         make install && \
         rm -rf ${DIR}
+
 ### libvpx https://www.webmproject.org/code/
 RUN \
         DIR=/tmp/vpx && \
@@ -172,6 +172,7 @@ RUN \
         make && \
         make install && \
         rm -rf ${DIR}
+
 ### libmp3lame http://lame.sourceforge.net/
 RUN \
         DIR=/tmp/lame && \
@@ -183,6 +184,7 @@ RUN \
         make && \
         make install && \
         rm -rf ${DIR}
+
 ### xvid https://www.xvid.com/
 RUN \
         DIR=/tmp/xvid && \
@@ -196,6 +198,7 @@ RUN \
         make && \
         make install && \
         rm -rf ${DIR}
+
 ### fdk-aac https://github.com/mstorsjo/fdk-aac
 RUN \
         DIR=/tmp/fdk-aac && \
@@ -208,6 +211,7 @@ RUN \
         make && \
         make install && \
         rm -rf ${DIR}
+
 ## openjpeg https://github.com/uclouvain/openjpeg
 RUN \
         DIR=/tmp/openjpeg && \
@@ -219,6 +223,7 @@ RUN \
         make && \
         make install && \
         rm -rf ${DIR}
+
 ## freetype https://www.freetype.org/
 RUN  \
         DIR=/tmp/freetype && \
@@ -231,6 +236,7 @@ RUN  \
         make && \
         make install && \
         rm -rf ${DIR}
+
 ## libvstab https://github.com/georgmartius/vid.stab
 RUN  \
         DIR=/tmp/vid.stab && \
@@ -243,6 +249,7 @@ RUN  \
         make && \
         make install && \
         rm -rf ${DIR}
+
 ## fridibi https://www.fribidi.org/
 # + https://github.com/fribidi/fribidi/issues/8
 RUN  \
@@ -258,6 +265,7 @@ RUN  \
         make -j 1 && \
         make install && \
         rm -rf ${DIR}
+
 ## fontconfig https://www.freedesktop.org/wiki/Software/fontconfig/
 RUN  \
         DIR=/tmp/fontconfig && \
@@ -269,6 +277,7 @@ RUN  \
         make && \
         make install && \
         rm -rf ${DIR}
+
 ## libass https://github.com/libass/libass
 RUN  \
         DIR=/tmp/libass && \
@@ -282,6 +291,7 @@ RUN  \
         make && \
         make install && \
         rm -rf ${DIR}
+
 ## kvazaar https://github.com/ultravideo/kvazaar
 RUN \
         DIR=/tmp/kvazaar && \
@@ -295,6 +305,7 @@ RUN \
         make install && \
         rm -rf ${DIR}
 
+## aom
 RUN \
         dir=/tmp/aom ; \
         mkdir -p ${dir} ; \
@@ -355,6 +366,7 @@ RUN  \
         cd tools && \
         make qt-faststart && \
         cp qt-faststart ${PREFIX}/bin
+
 ## cleanup
 RUN \
         ldd ${PREFIX}/bin/ffmpeg | grep opt/ffmpeg | cut -d ' ' -f 3 | xargs -i cp {} /usr/local/lib/ && \
@@ -363,7 +375,7 @@ RUN \
         LD_LIBRARY_PATH=/usr/local/lib ffmpeg -buildconf
 
 FROM        base AS release
-MAINTAINER  Julien Rottenberg <julien@rottenberg.info>
+MAINTAINER  Tnds82 <tndsrepo@gmail.com>
 
 CMD         ["--help"]
 ENTRYPOINT  ["ffmpeg"]
@@ -375,6 +387,3 @@ RUN \
 	apt-get update -y && \
 	apt-get install -y --no-install-recommends libva-drm1 libva1 && \
 	rm -rf /var/lib/apt/lists/*
-
-# Let's make sure the app built correctly
-# Convenient to verify on https://hub.docker.com/r/jrottenberg/ffmpeg/builds/ console output
